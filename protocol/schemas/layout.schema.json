@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://leafboard.local/schemas/layout.schema.json",
+  "title": "LeafBoard Device Layout 1.0",
+  "type": "object",
+  "required": ["schemaVersion", "deviceId", "gridColumns", "pageMode", "syncPolicy", "displayPolicy", "items"],
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "deviceId": { "$ref": "#/$defs/id" },
+    "gridColumns": { "const": 4 },
+    "pageMode": { "const": "paged" },
+    "syncPolicy": {
+      "type": "object",
+      "required": ["intervalMinutes", "syncOnResume", "refreshOnlyWhenChanged", "wifiOnly"],
+      "properties": {
+        "intervalMinutes": { "enum": [1, 3, 5, 10, 15, 30, 60] },
+        "syncOnResume": { "type": "boolean" },
+        "refreshOnlyWhenChanged": { "type": "boolean" },
+        "wifiOnly": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "displayPolicy": {
+      "type": "object",
+      "required": ["keepScreenOn", "fullRefreshAfterChanges", "quietHours"],
+      "properties": {
+        "keepScreenOn": { "const": true },
+        "fullRefreshAfterChanges": { "type": "integer", "minimum": 1, "maximum": 100 },
+        "quietHours": { "$ref": "#/$defs/quietHours" }
+      },
+      "additionalProperties": false
+    },
+    "items": { "type": "array", "maxItems": 64, "items": { "$ref": "#/$defs/layoutItem" } },
+    "extensions": { "type": "object", "additionalProperties": true }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$" },
+    "quietHours": {
+      "type": "object",
+      "required": ["enabled", "start", "end", "brightnessPercent", "mode"],
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "start": { "type": "string", "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d$" },
+        "end": { "type": "string", "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d$" },
+        "brightnessPercent": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "mode": { "enum": ["blank", "clock"] }
+      },
+      "additionalProperties": false
+    },
+    "layoutItem": {
+      "type": "object",
+      "required": ["cardRef", "enabled", "size", "order", "page"],
+      "properties": {
+        "cardRef": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{0,63}/[a-z0-9][a-z0-9._-]{0,63}$" },
+        "enabled": { "type": "boolean" },
+        "size": { "enum": ["small", "medium", "large"] },
+        "order": { "type": "integer", "minimum": 0 },
+        "page": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    }
+  }
+}

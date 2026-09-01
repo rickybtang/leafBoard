@@ -1,0 +1,16 @@
+.DS_Store
+.idea/
+*.iml
+*.xcuserstate
+*.jks
+*.keystore
+*.p12
+*.pem
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+macos/.build/
+macos/.swiftpm/
+macos/dist/
+*.log

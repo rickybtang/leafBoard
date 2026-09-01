@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "1.0",
+  "producerId": "example-invalid",
+  "cardId": "dual-value-wrong-layout",
+  "revision": 1,
+  "type": "metric",
+  "updatedAt": "2026-08-30T17:00:00+08:00",
+  "content": {
+    "title": "双值位置错误（无效示例）",
+    "fields": [
+      {
+        "key": "remaining",
+        "label": "月剩余",
+        "value": 42,
+        "format": "percent",
+        "role": "primary",
+        "minSize": "small"
+      },
+      {
+        "key": "top-model",
+        "label": "今日最多",
+        "value": "模型 A",
+        "format": "text",
+        "role": "detail",
+        "minSize": "medium",
+        "secondary": {
+          "value": 1250000,
+          "format": "number",
+          "unit": "token"
+        }
+      }
+    ]
+  },
+  "presentation": {
+    "icon": "quota",
+    "preferredSize": "large",
+    "allowedSizes": ["small", "medium", "large"],
+    "status": "normal"
+  }
+}

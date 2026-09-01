@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "1.0",
+  "producerId": "example-producer",
+  "cardId": "codex-usage",
+  "revision": 1,
+  "type": "metric",
+  "updatedAt": "2026-09-01T12:00:00+08:00",
+  "expiresAt": "2026-09-01T14:00:00+08:00",
+  "content": {
+    "title": "Codex 额度（示例）",
+    "fields": [
+      {
+        "key": "five-hour-remaining",
+        "label": "短窗口剩余",
+        "value": 78,
+        "format": "percent",
+        "role": "primary",
+        "minSize": "small"
+      },
+      {
+        "key": "weekly-remaining",
+        "label": "周剩余",
+        "value": 43,
+        "format": "percent",
+        "role": "detail",
+        "minSize": "small"
+      },
+      {
+        "key": "weekly-reset",
+        "label": "周重置",
+        "value": "2026-09-05T08:00:00+08:00",
+        "format": "datetime",
+        "role": "detail",
+        "minSize": "small"
+      },
+      {
+        "key": "last-refresh",
+        "label": "采集时间",
+        "value": "2026-09-01T12:00:00+08:00",
+        "format": "datetime",
+        "role": "detail",
+        "minSize": "small"
+      }
+    ]
+  },
+  "presentation": {
+    "icon": "quota",
+    "preferredSize": "medium",
+    "allowedSizes": ["small", "medium", "large"],
+    "status": "normal"
+  }
+}

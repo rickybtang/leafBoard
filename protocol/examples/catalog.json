@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "1.0",
+  "producerId": "example-producer",
+  "revision": 1,
+  "updatedAt": "2026-08-30T17:00:00+08:00",
+  "cards": [
+    {
+      "cardId": "codex-usage",
+      "path": "cards/codex-usage.json",
+      "revision": 1,
+      "sha256": "358606bb77708bc3319f826b9e4c1a6561d549ef8d7ead81f2f99c47579d1353"
+    }
+  ]
+}

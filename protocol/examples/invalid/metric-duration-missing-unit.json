@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1.0",
+  "producerId": "example-invalid",
+  "cardId": "duration-missing-unit",
+  "revision": 1,
+  "type": "metric",
+  "updatedAt": "2026-08-31T08:00:00+08:00",
+  "content": {
+    "title": "时长单位缺失（无效示例）",
+    "fields": [
+      {
+        "key": "duration",
+        "label": "今日录音",
+        "value": 120,
+        "format": "duration",
+        "role": "primary",
+        "minSize": "small"
+      }
+    ]
+  },
+  "presentation": {
+    "icon": "clock",
+    "preferredSize": "small",
+    "allowedSizes": ["small"],
+    "status": "normal"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "deviceId": "leaf2-main",
+  "gridColumns": 4,
+  "pageMode": "paged",
+  "syncPolicy": {
+    "intervalMinutes": 15,
+    "syncOnResume": true,
+    "refreshOnlyWhenChanged": true,
+    "wifiOnly": true
+  },
+  "displayPolicy": {
+    "keepScreenOn": true,
+    "fullRefreshAfterChanges": 10,
+    "quietHours": {
+      "enabled": false,
+      "start": "23:00",
+      "end": "07:00",
+      "brightnessPercent": 0,
+      "mode": "blank"
+    }
+  },
+  "items": [
+    {
+      "cardRef": "example-producer/codex-usage",
+      "enabled": true,
+      "size": "medium",
+      "order": 1,
+      "page": 1
+    }
+  ]
+}

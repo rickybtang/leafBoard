@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "producerId": "courier-agent",
+  "cardId": "sf-123456",
+  "revision": 1,
+  "type": "status",
+  "updatedAt": "2026-08-30T17:00:00+08:00",
+  "expiresAt": "2026-08-31T17:00:00+08:00",
+  "content": {
+    "title": "顺丰快递（示例）",
+    "state": "运输中",
+    "fields": [
+      {
+        "key": "latest-event",
+        "label": "最新进度",
+        "value": "快件已到达深圳转运中心",
+        "format": "text",
+        "role": "primary",
+        "minSize": "small"
+      },
+      {
+        "key": "event-time",
+        "label": "更新时间",
+        "value": "2026-08-30T16:20:00+08:00",
+        "format": "datetime",
+        "role": "secondary",
+        "minSize": "medium"
+      }
+    ]
+  },
+  "presentation": {
+    "icon": "delivery",
+    "preferredSize": "medium",
+    "allowedSizes": ["small", "medium", "large"],
+    "status": "normal"
+  }
+}

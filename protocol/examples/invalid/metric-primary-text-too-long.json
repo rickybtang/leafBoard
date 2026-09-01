@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1.0",
+  "producerId": "example-invalid",
+  "cardId": "primary-text-too-long",
+  "revision": 1,
+  "type": "metric",
+  "updatedAt": "2026-08-30T17:00:00+08:00",
+  "content": {
+    "title": "主字段过长（无效示例）",
+    "fields": [
+      {
+        "key": "state",
+        "label": "当前状态",
+        "value": "这是一个超过十二字符的动态主字段",
+        "format": "text",
+        "role": "primary",
+        "minSize": "small"
+      }
+    ]
+  },
+  "presentation": {
+    "icon": "system",
+    "preferredSize": "medium",
+    "allowedSizes": ["small", "medium", "large"],
+    "status": "normal"
+  }
+}

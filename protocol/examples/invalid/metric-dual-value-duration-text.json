@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.0",
+  "producerId": "example-invalid",
+  "cardId": "dual-value-duration-text",
+  "revision": 1,
+  "type": "metric",
+  "updatedAt": "2026-08-31T08:00:00+08:00",
+  "content": {
+    "title": "双值时长类型错误（无效示例）",
+    "fields": [
+      {
+        "key": "count",
+        "label": "今日数量",
+        "value": 100,
+        "format": "number",
+        "unit": "次",
+        "role": "primary",
+        "minSize": "small"
+      },
+      {
+        "key": "recent-7-days",
+        "label": "近7天",
+        "value": "2时",
+        "format": "duration",
+        "unit": "s",
+        "role": "detail",
+        "minSize": "large",
+        "secondary": {
+          "value": 24000,
+          "format": "number",
+          "unit": "次"
+        }
+      }
+    ]
+  },
+  "presentation": {
+    "icon": "text",
+    "preferredSize": "large",
+    "allowedSizes": ["small", "medium", "large"],
+    "status": "normal"
+  }
+}

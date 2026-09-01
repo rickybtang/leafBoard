@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "1.0",
+  "producerId": "phone-todo",
+  "cardId": "today",
+  "revision": 1,
+  "type": "list",
+  "updatedAt": "2026-08-30T17:00:00+08:00",
+  "content": {
+    "title": "今日待办（示例）",
+    "items": [
+      {
+        "id": "submit-materials",
+        "text": "提交材料",
+        "checked": false,
+        "dueAt": "2026-08-31T10:00:00+08:00",
+        "priority": 1
+      }
+    ]
+  },
+  "presentation": {
+    "icon": "todo",
+    "preferredSize": "large",
+    "allowedSizes": ["medium", "large"],
+    "status": "normal"
+  }
+}

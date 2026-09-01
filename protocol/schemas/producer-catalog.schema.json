@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://leafboard.local/schemas/producer-catalog.schema.json",
+  "title": "LeafBoard Producer Catalog 1.0",
+  "type": "object",
+  "required": ["schemaVersion", "producerId", "revision", "updatedAt", "cards"],
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "producerId": { "$ref": "#/$defs/id" },
+    "revision": { "type": "integer", "minimum": 0 },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "cards": { "type": "array", "maxItems": 100, "items": { "$ref": "#/$defs/cardEntry" } },
+    "extensions": { "type": "object", "additionalProperties": true }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$" },
+    "cardEntry": {
+      "type": "object",
+      "required": ["cardId", "path", "revision", "sha256"],
+      "properties": {
+        "cardId": { "$ref": "#/$defs/id" },
+        "path": { "type": "string", "pattern": "^cards/[a-z0-9][a-z0-9._-]{0,63}\\.json$" },
+        "revision": { "type": "integer", "minimum": 0 },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

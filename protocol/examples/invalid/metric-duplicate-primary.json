@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "1.0",
+  "producerId": "example-invalid",
+  "cardId": "duplicate-primary",
+  "revision": 1,
+  "type": "metric",
+  "updatedAt": "2026-08-30T17:00:00+08:00",
+  "content": {
+    "title": "双主字段（无效示例）",
+    "fields": [
+      {
+        "key": "remaining",
+        "label": "剩余",
+        "value": 50,
+        "format": "percent",
+        "role": "primary",
+        "minSize": "small"
+      },
+      {
+        "key": "used",
+        "label": "已使用",
+        "value": 50,
+        "format": "percent",
+        "role": "primary",
+        "minSize": "small"
+      }
+    ]
+  },
+  "presentation": {
+    "icon": "quota",
+    "preferredSize": "small",
+    "allowedSizes": ["small"],
+    "status": "normal"
+  }
+}

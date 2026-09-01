@@ -1,0 +1,236 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://leafboard.local/schemas/card.schema.json",
+  "title": "LeafBoard Card 1.0",
+  "type": "object",
+  "required": ["schemaVersion", "producerId", "cardId", "revision", "type", "updatedAt", "content", "presentation"],
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "producerId": { "$ref": "#/$defs/id" },
+    "cardId": { "$ref": "#/$defs/id" },
+    "revision": { "type": "integer", "minimum": 0 },
+    "type": { "enum": ["metric", "list", "status"] },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "expiresAt": { "type": "string", "format": "date-time" },
+    "content": { "type": "object" },
+    "presentation": { "$ref": "#/$defs/presentation" },
+    "extensions": { "$ref": "#/$defs/extensions" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "type": { "const": "metric" } }, "required": ["type"] },
+      "then": { "properties": { "content": { "$ref": "#/$defs/metricContent" } } }
+    },
+    {
+      "if": { "properties": { "type": { "const": "list" } }, "required": ["type"] },
+      "then": { "properties": { "content": { "$ref": "#/$defs/listContent" } } }
+    },
+    {
+      "if": { "properties": { "type": { "const": "status" } }, "required": ["type"] },
+      "then": { "properties": { "content": { "$ref": "#/$defs/statusContent" } } }
+    }
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$" },
+    "title": { "type": "string", "minLength": 1, "maxLength": 24 },
+    "value": {
+      "anyOf": [
+        { "type": "string", "maxLength": 80 },
+        { "type": "number" },
+        { "type": "boolean" },
+        { "type": "null" }
+      ]
+    },
+    "field": {
+      "type": "object",
+      "required": ["key", "label", "value", "format", "role", "minSize"],
+      "properties": {
+        "key": { "$ref": "#/$defs/id" },
+        "label": { "type": "string", "minLength": 1, "maxLength": 24 },
+        "value": { "$ref": "#/$defs/value" },
+        "format": { "enum": ["text", "number", "percent", "money", "datetime", "duration", "boolean"] },
+        "unit": { "type": "string", "maxLength": 12 },
+        "role": { "enum": ["primary", "secondary", "detail", "badge"] },
+        "minSize": { "enum": ["small", "medium", "large"] },
+        "secondary": { "$ref": "#/$defs/secondaryValue" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "format": { "const": "money" } }, "required": ["format"] },
+          "then": {
+            "required": ["unit"],
+            "properties": { "unit": { "pattern": "^[A-Z]{3}$" } }
+          }
+        },
+        {
+          "if": { "properties": { "format": { "const": "duration" } }, "required": ["format"] },
+          "then": {
+            "required": ["unit"],
+            "properties": {
+              "value": { "type": "number", "minimum": 0 },
+              "unit": { "const": "s" }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": ["role"],
+            "properties": { "role": { "const": "primary" } }
+          },
+          "then": {
+            "properties": {
+              "label": { "type": "string", "minLength": 1, "maxLength": 8 }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "required": ["format"],
+                  "properties": { "format": { "const": "text" } }
+                },
+                "then": {
+                  "properties": {
+                    "value": { "type": "string", "minLength": 1, "maxLength": 12 }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": { "required": ["secondary"] },
+          "then": {
+            "properties": {
+              "label": { "type": "string", "minLength": 1, "maxLength": 8 },
+              "format": { "enum": ["text", "number", "percent", "money", "duration"] },
+              "role": { "const": "detail" },
+              "minSize": { "const": "large" }
+            },
+            "allOf": [
+              {
+                "if": { "properties": { "format": { "const": "text" } }, "required": ["format"] },
+                "then": { "properties": { "value": { "type": "string", "minLength": 1, "maxLength": 12 } } },
+                "else": { "properties": { "value": { "type": "number" } } }
+              }
+            ]
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "secondaryValue": {
+      "type": "object",
+      "required": ["value", "format"],
+      "properties": {
+        "value": { "type": "number" },
+        "format": { "enum": ["number", "percent", "money", "duration"] },
+        "unit": { "type": "string", "maxLength": 12 }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "format": { "const": "money" } }, "required": ["format"] },
+          "then": {
+            "required": ["unit"],
+            "properties": { "unit": { "pattern": "^[A-Z]{3}$" } }
+          }
+        },
+        {
+          "if": { "properties": { "format": { "const": "duration" } }, "required": ["format"] },
+          "then": {
+            "required": ["unit"],
+            "properties": {
+              "value": { "type": "number", "minimum": 0 },
+              "unit": { "const": "s" }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "metricContent": {
+      "type": "object",
+      "required": ["title", "fields"],
+      "properties": {
+        "title": { "$ref": "#/$defs/title" },
+        "fields": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": { "$ref": "#/$defs/field" },
+          "contains": {
+            "type": "object",
+            "required": ["role"],
+            "properties": { "role": { "const": "primary" } }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "listContent": {
+      "type": "object",
+      "required": ["title", "items"],
+      "properties": {
+        "title": { "$ref": "#/$defs/title" },
+        "items": { "type": "array", "maxItems": 50, "items": { "$ref": "#/$defs/listItem" } }
+      },
+      "additionalProperties": false
+    },
+    "listItem": {
+      "type": "object",
+      "required": ["id", "text"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "text": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "checked": { "type": "boolean" },
+        "dueAt": { "type": "string", "format": "date-time" },
+        "priority": { "type": "integer", "minimum": 1, "maximum": 4 }
+      },
+      "additionalProperties": false
+    },
+    "statusContent": {
+      "type": "object",
+      "required": ["title", "state", "fields"],
+      "properties": {
+        "title": { "$ref": "#/$defs/title" },
+        "state": { "type": "string", "minLength": 1, "maxLength": 32 },
+        "fields": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": { "$ref": "#/$defs/field" },
+          "contains": {
+            "type": "object",
+            "required": ["role"],
+            "properties": { "role": { "const": "primary" } }
+          },
+          "minContains": 1,
+          "maxContains": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "presentation": {
+      "type": "object",
+      "required": ["icon", "preferredSize", "allowedSizes", "status"],
+      "properties": {
+        "icon": { "enum": ["quota", "todo", "delivery", "clock", "calendar", "weather", "system", "text"] },
+        "preferredSize": { "enum": ["small", "medium", "large"] },
+        "allowedSizes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["small", "medium", "large"] }
+        },
+        "status": { "enum": ["normal", "warning", "error", "unknown"] }
+      },
+      "additionalProperties": false
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": { "pattern": "^[a-z0-9][a-z0-9._-]{2,127}$" },
+      "additionalProperties": true
+    }
+  }
+}
