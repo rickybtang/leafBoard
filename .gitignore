@@ -13,4 +13,5 @@ android/local.properties
 macos/.build/
 macos/.swiftpm/
 macos/dist/
+macos/LocalProducers/
 *.log
